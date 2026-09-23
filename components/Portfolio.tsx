@@ -1,21 +1,128 @@
-'use client'
-import{motion}from'framer-motion'
-import Network from'./Network'
-import Architecture from'./Architecture'
-import RagLab from'./RagLab'
-import Constellation from'./Constellation'
-const stack=[['BACKEND','Java 21','Spring Boot 3','REST APIs','JPA / Hibernate','Microservices'],['DISTRIBUTED','Apache Kafka','Redis','AWS','Docker','CI/CD'],['AI APPLICATIONS','Spring AI','RAG','Embeddings','Vector Search','pgvector']]
-const projects=[{name:'DIGITAL LIBRARY',type:'SECURE SPRING BOOT APPLICATION',desc:'A backend-first digital library platform with role-based workflows, file storage, caching and cloud deployment.',tags:['Java 21','Spring Boot 3','PostgreSQL','Redis','JWT / RBAC','AWS'],accent:'#48e4e8'},{name:'POLICYDOCS',type:'SECURE RAG DOCUMENT SERVICE',desc:'A Spring Boot + Spring AI document service for policy-document ingestion, semantic retrieval and grounded Q&A.',tags:['Spring AI','pgvector','RAG','Redis','JWT / RBAC','AWS'],accent:'#9a6cff'}]
-function Reveal({children,className=''}:{children:React.ReactNode,className?:string}){return <motion.div initial={{opacity:0,y:28}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-80px'}} transition={{duration:.7,ease:'easeOut'}} className={className}>{children}</motion.div>}
-export default function Portfolio(){return <main><div className="noise"/><header className="fixed top-0 z-50 w-full px-3 py-3"><nav className="container-x glass flex items-center justify-between px-4 py-3"><a href="#top" className="mono text-[10px] font-bold tracking-[.22em]">CM<span className="text-cyan-300">/</span>JAVA</a><div className="hidden gap-6 md:flex">{['WORK','EXPERIENCE','AI LAB','STACK','ABOUT','CONTACT'].map(x=><a key={x} href={'#'+x.toLowerCase().replace(' ','-')} className="mono text-[9px] tracking-[.16em] text-slate-500 transition hover:text-white">{x}</a>)}</div><div className="flex items-center gap-2 mono text-[8px] text-emerald-300"><span className="h-1.5 w-1.5 rounded-full bg-emerald-300 pulse"/>AVAILABLE</div></nav></header>
-<section id="top" className="relative min-h-screen overflow-hidden pt-28"><div className="hero-orb"/><div className="container-x grid min-h-[calc(100vh-112px)] items-center gap-10 pb-20 lg:grid-cols-[.85fr_1.15fr]"><div className="relative z-10"><div className="eyebrow mb-7">JAVA BACKEND ENGINEER / HYDERABAD / INDIA</div><h1 className="display text-[clamp(62px,10vw,142px)] font-bold leading-[.78]">CHINTALA<br/><span className="text-slate-500">MAHINDRA</span></h1><div className="mt-8 flex items-center gap-3"><div className="h-px w-12 bg-cyan-300/70"/><span className="mono text-[11px] tracking-[.2em] text-cyan-200">JAVA BACKEND ENGINEER</span></div><p className="mt-7 max-w-xl text-[17px] leading-8 text-slate-400">Building secure Spring Boot systems, distributed backend services and practical AI applications.</p><div className="mt-9 flex flex-wrap gap-3"><a href="#work" className="border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 mono text-[9px] tracking-[.18em] text-cyan-100">EXPLORE WORK →</a><a href="#contact" className="border border-white/10 px-5 py-3 mono text-[9px] tracking-[.18em] text-slate-400 transition hover:border-white/30 hover:text-white">CONTACT</a></div><div className="mt-12 grid max-w-lg grid-cols-3 gap-5 border-t border-white/10 pt-5"><div><div className="mono text-[8px] text-slate-600">CORE</div><div className="mt-1 text-sm">Spring Boot</div></div><div><div className="mono text-[8px] text-slate-600">MODE</div><div className="mt-1 text-sm">Backend-first</div></div><div><div className="mono text-[8px] text-slate-600">AI</div><div className="mt-1 text-sm">Application layer</div></div></div></div><div className="relative z-10"><Network/></div></div></section>
-<section id="about" className="section"><div className="container-x"><Reveal><div className="eyebrow">01 / ENGINEERING PROFILE</div><h2 className="section-title mt-5">SYSTEMS FIRST.<br/><span className="text-slate-600">AI WHERE IT FITS.</span></h2><p className="section-copy mt-7">Java backend engineering is the center of gravity: APIs, persistence, security, messaging, caching and cloud delivery. AI is layered into that foundation through practical application patterns such as retrieval, embeddings and controlled LLM access.</p></Reveal><div className="mt-14 grid gap-4 lg:grid-cols-3">{stack.map((s,i)=><Reveal key={s[0]} className="h-full"><div className="tech-panel h-full p-6" style={{borderTopColor:i===0?'rgba(72,228,232,.45)':i===1?'rgba(74,168,255,.45)':'rgba(154,108,255,.45)'}}><div className="eyebrow">0{i+1} / {s[0]}</div><div className="mt-7 space-y-4">{s.slice(1).map(x=><div key={x} className="flex items-center justify-between border-b border-white/5 pb-3"><span className="text-lg font-medium">{x}</span><span className="mono text-[8px] text-slate-600">NODE</span></div>)}</div></div></Reveal>)}</div></div></section>
-<section id="work" className="section border-y border-white/5"><div className="container-x"><Reveal><div className="eyebrow">02 / SELECTED WORK</div><h2 className="section-title mt-5">ENGINEERING<br/><span className="text-slate-600">IN PRACTICE.</span></h2></Reveal><div className="mt-14 grid gap-5 lg:grid-cols-2">{projects.map((p,i)=><Reveal key={p.name}><article className="tech-panel group min-h-[520px] p-6 md:p-8" style={{borderColor:`${p.accent}22`}}><div className="flex items-start justify-between"><div><div className="eyebrow">PROJECT 0{i+1}</div><h3 className="mt-4 text-3xl font-semibold tracking-tight">{p.name}</h3><div className="mt-2 mono text-[9px] tracking-[.16em]" style={{color:p.accent}}>{p.type}</div></div><div className="mono text-[8px] text-slate-600">2025 — PRESENT</div></div><p className="mt-7 max-w-lg text-sm leading-7 text-slate-400">{p.desc}</p><div className="mt-8 grid gap-2 sm:grid-cols-2">{p.tags.map(t=><div key={t} className="border border-white/8 bg-white/[.02] px-3 py-3 mono text-[9px] text-slate-300">{t}</div>)}</div><div className="relative mt-8 h-40 overflow-hidden border border-white/8 bg-[#070c13]"><div className="absolute inset-0 grid-bg opacity-40"/><div className="absolute left-7 top-1/2 h-px w-[72%]" style={{background:`linear-gradient(90deg,${p.accent}00,${p.accent}99,${p.accent}00)`}}/><div className="absolute left-[18%] top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border" style={{borderColor:p.accent}}/><div className="absolute left-[48%] top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rotate-45 border" style={{borderColor:`${p.accent}aa`}}/><div className="absolute right-[18%] top-1/2 h-3 w-3 -translate-y-1/2 rounded-full" style={{background:p.accent}}/></div><div className="mt-6 flex items-center justify-between border-t border-white/8 pt-4"><span className="mono text-[8px] tracking-[.16em] text-slate-500">CASE STUDY VIEW</span><span>↗</span></div></article></Reveal>)}</div></div></section>
-<section id="experience" className="section"><div className="container-x"><Reveal><div className="eyebrow">03 / PROFESSIONAL EXPERIENCE</div><div className="mt-8 grid gap-12 lg:grid-cols-[.7fr_1.3fr]"><div><div className="mono text-[9px] tracking-[.18em] text-cyan-200">AUG 2024 — PRESENT</div><h2 className="mt-4 text-4xl font-semibold">Tata Consultancy Services</h2><p className="mt-2 text-slate-400">Software Engineer — Java Backend</p><p className="mt-5 text-sm leading-7 text-slate-500">Enterprise HRMS & Finance Microservices · Hyderabad</p></div><div className="space-y-3">{['Spring Boot 3 microservices on Java 21','REST APIs + Spring Data JPA across PostgreSQL / SQL Server','JWT authentication + RBAC across employee, HR and administrative endpoints','Apache Kafka for asynchronous event processing + Redis caching','Spring AI integration for document- and policy-based Q&A with application-level access controls','Production debugging, API/database issue resolution and Agile enhancements'].map((x,i)=><div key={x} className="flex gap-4 border-b border-white/8 py-4"><span className="mono mt-1 text-[8px] text-slate-600">0{i+1}</span><span className="text-sm leading-6 text-slate-300">{x}</span></div>)}</div></div></Reveal><div className="mt-14"><Architecture/></div></div></section>
-<section id="ai-lab" className="section border-y border-white/5"><div className="container-x"><Reveal><div className="eyebrow">04 / AI APPLICATION LAB</div><h2 className="section-title mt-5">PRACTICAL AI.<br/><span className="text-slate-600">BACKEND CONTROL.</span></h2><p className="section-copy mt-7">RAG and LLM capabilities are treated as application components—not as an authorization layer. The backend controls identity, access scope and retrieval before context reaches the model.</p></Reveal><div className="mt-12 grid gap-5 lg:grid-cols-[1.4fr_.6fr]"><RagLab/><div className="tech-panel p-6"><div className="eyebrow">SECURITY / RAG</div><div className="mt-7 space-y-0">{['USER','JWT','SPRING SECURITY','RBAC','AUTHORIZED DATA SCOPE','VECTOR RETRIEVAL','CONTEXT','LLM','RESPONSE'].map((x,i)=><div key={x} className="flex items-center gap-3"><div className="flex flex-col items-center"><span className="h-2 w-2 rounded-full bg-cyan-300/70"/>{i<8&&<span className="h-5 w-px bg-white/10"/>}</div><span className="mono text-[9px] tracking-[.13em] text-slate-300">{x}</span></div>)}</div><div className="mt-8 border-t border-white/8 pt-5 mono text-[8px] leading-5 text-slate-600">THE MODEL DOES NOT DECIDE AUTHORIZATION.<br/>APPLICATION LOGIC CONTROLS RETRIEVED CONTEXT.</div></div></div></div></section>
-<section id="stack" className="section"><div className="container-x"><Reveal><div className="eyebrow">05 / ENGINEERING CONSTELLATION</div><h2 className="section-title mt-5">THE STACK<br/><span className="text-slate-600">AROUND THE CORE.</span></h2></Reveal><div className="mt-10"><Constellation/></div></div></section>
-<section id="playground" className="section border-y border-white/5"><div className="container-x"><Reveal><div className="eyebrow">06 / ARCHITECTURE PLAYGROUND</div><h2 className="section-title mt-5">THINK IN<br/><span className="text-slate-600">SYSTEMS.</span></h2><p className="section-copy mt-7">A compact conceptual playground for backend, distributed and AI application architecture.</p></Reveal><div className="mt-10"><Architecture/></div></div></section>
-<section className="section"><div className="container-x"><Reveal><div className="eyebrow">07 / TIMELINE</div><div className="mt-10 max-w-3xl"><div className="relative border-l border-white/10 pl-8"><div className="mb-12 relative"><span className="absolute -left-[37px] top-1 h-2 w-2 rounded-full bg-cyan-300"/><div className="mono text-[9px] text-cyan-200">2024</div><h3 className="mt-2 text-2xl font-semibold">TCS / Java Backend</h3><p className="mt-2 text-sm text-slate-500">Enterprise HRMS & Finance Microservices</p></div><div className="mb-12 relative"><span className="absolute -left-[37px] top-1 h-2 w-2 rounded-full bg-violet-300"/><div className="mono text-[9px] text-violet-200">2025</div><h3 className="mt-2 text-2xl font-semibold">Digital Library</h3><p className="mt-2 text-sm text-slate-500">Spring Boot backend platform</p></div><div className="relative"><span className="absolute -left-[37px] top-1 h-2 w-2 rounded-full bg-emerald-300"/><div className="mono text-[9px] text-emerald-200">PRESENT</div><h3 className="mt-2 text-2xl font-semibold">PolicyDocs / AI Application Engineering</h3><p className="mt-2 text-sm text-slate-500">Spring AI, RAG, embeddings, pgvector and controlled retrieval</p></div></div></div></Reveal></div></section>
-<section id="contact" className="section overflow-hidden"><div className="container-x relative"><Reveal><div className="eyebrow">08 / CONTACT</div><h2 className="section-title mt-5 max-w-5xl">LET’S BUILD<br/><span className="text-slate-600">SOMETHING USEFUL.</span></h2><p className="section-copy mt-7">Open to Java backend engineering opportunities, AI-enabled backend projects and selected freelance work.</p><div className="mt-10 flex flex-wrap gap-3"><a className="border border-cyan-300/40 bg-cyan-300/10 px-6 py-4 mono text-[9px] tracking-[.18em] text-cyan-100" href="mailto:chintalamahindra163@gmail.com">CONTACT ME →</a><span className="border border-white/10 px-6 py-4 mono text-[9px] tracking-[.18em] text-slate-600">LINKEDIN / URL TO ADD</span><a className="border border-white/10 px-6 py-4 mono text-[9px] tracking-[.18em] text-slate-300" href="/resume-source.docx" download>DOWNLOAD RESUME ↓</a></div></Reveal></div></section>
-<footer className="border-t border-white/5 py-8"><div className="container-x flex items-center justify-between"><div className="mono text-[8px] tracking-[.18em] text-slate-600">CHINTALA MAHINDRA / JAVA BACKEND ENGINEER</div><div className="mono text-[8px] tracking-[.12em] text-slate-700">NEXT.JS · TYPESCRIPT · MOTION</div></div></footer>
-</main>}
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Network from "./Network";
+import Architecture from "./Architecture";
+import RagLab from "./RagLab";
+import Constellation from "./Constellation";
+import Contact from "./Contact";
+import { site, type Project } from "@/lib/site";
+
+function Reveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: .65 }} className={className}>{children}</motion.div>;
+}
+
+function Flow({ project }: { project: Project }) {
+  const labels = project.name.startsWith("Digital") ? ["CLIENT", "API / SECURITY", "SERVICE", "POSTGRESQL / REDIS"] : project.name.startsWith("Policy") ? ["INGEST", "EMBED", "PGVECTOR", "RETRIEVE", "LLM"] : ["CLIENT", "SPRING SECURITY", "AI ORCHESTRATOR", "RETRIEVAL", "STRUCTURED RESPONSE"];
+  return <div className="flow" aria-label={project.name + " architecture flow"}>{labels.map((label, index) => <div className="flow-node" key={label}><span>{label}</span>{index < labels.length - 1 && <span className="flow-arrow" aria-hidden="true">→</span>}</div>)}</div>;
+}
+
+const nav = [["WORK", "#work"], ["EXPERIENCE", "#experience"], ["AI LAB", "#ai-lab"], ["STACK", "#stack"], ["PLAYGROUND", "#playground"], ["TIMELINE", "#timeline"], ["CONTACT", "#contact"]];
+
+export default function Portfolio() {
+  const [menu, setMenu] = useState(false);
+  const [scroll, setScroll] = useState(0);
+
+  useEffect(() => {
+    const update = () => setScroll((window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight)) * 100);
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  return (
+    <>
+      <div className="scroll-progress" style={{ width: scroll + "%" }} aria-hidden="true" />
+      <header className="site-header">
+        <nav className="container-x nav-shell" aria-label="Primary navigation">
+          <a href="#top" className="brand" aria-label="Chintala Mahindra home">CM<span>/</span>JAVA</a>
+          <div className="desktop-nav">{nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}</div>
+          <div className="availability"><span className="availability-dot" /> <span className="availability-text">AVAILABLE</span></div>
+          <a className="nav-contact" href="#contact">HIRE ME</a>
+          <button className="menu-button" type="button" aria-expanded={menu} aria-controls="mobile-menu" aria-label="Open navigation" onClick={() => setMenu(!menu)}><span /><span /><span /></button>
+        </nav>
+        {menu && <div id="mobile-menu" className="mobile-menu"><div className="mobile-menu-inner">{nav.map(([label, href]) => <a key={label} href={href} onClick={() => setMenu(false)}>{label}</a>)}<a className="primary-button" href="#contact" onClick={() => setMenu(false)}>HIRE ME →</a></div></div>}
+      </header>
+
+      <main id="main-content">
+        <section id="top" className="hero" aria-labelledby="hero-title">
+          <div className="hero-orb" />
+          <div className="container-x hero-grid">
+            <div className="hero-copy">
+              <div className="eyebrow"><span>00</span> / JAVA BACKEND ENGINEER / HYDERABAD / INDIA</div>
+              <h1 id="hero-title" className="display">CHINTALA<br /><span>MAHINDRA</span></h1>
+              <div className="role-line"><i /> <span>JAVA BACKEND ENGINEER</span></div>
+              <p className="hero-subtitle">Building secure Spring Boot systems, distributed backend services and practical AI applications.</p>
+              <div className="hero-actions">
+                <a className="primary-button" href={`mailto:${site.email}?subject=Opportunity%20for%20Chintala%20Mahindra`}>EMAIL ME</a>
+                <a className="secondary-button" href={site.resume} download>DOWNLOAD RESUME</a>
+                <a className="secondary-button icon-link" href={site.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile">LinkedIn</a>
+                <a className="secondary-button icon-link" href={`tel:${site.phone.replaceAll(" ", "")}`} aria-label="Call Chintala Mahindra">Phone</a>
+              </div>
+              <div className="availability-strip"><strong>Open to:</strong> Java backend roles · AI-enabled backend projects · freelance <span>·</span> Hyderabad, India <span>·</span> {site.responseTime}</div>
+              <div className="proof-grid">
+                <div><span>JAVA / BACKEND</span><strong>Java 21 / Spring Boot 3</strong></div>
+                <div><span>DISTRIBUTED</span><strong>Kafka + Redis</strong></div>
+                <div><span>AI APPLICATIONS</span><strong>Spring AI / RAG</strong></div>
+              </div>
+            </div>
+            <Network />
+          </div>
+        </section>
+
+        <section id="about" className="section" aria-labelledby="profile-title">
+          <div className="container-x">
+            <Reveal><div className="eyebrow"><span>01</span> / ENGINEERING PROFILE</div><h2 id="profile-title" className="section-title">SYSTEMS FIRST.<br /><span className="muted-heading">AI WHERE IT FITS.</span></h2><p className="section-copy">Java backend engineering is the center of gravity: APIs, persistence, security, messaging, caching and cloud delivery. AI is layered into that foundation through practical application patterns such as retrieval, embeddings and controlled LLM access.</p></Reveal>
+            <div className="mt-14 grid gap-4 lg:grid-cols-3">{[
+              ["BACKEND", "Java 21", "Spring Boot 3", "REST APIs", "JPA / Hibernate", "Microservices"],
+              ["DISTRIBUTED", "Apache Kafka", "Redis", "AWS", "Docker", "CI/CD"],
+              ["AI APPLICATIONS", "Spring AI", "RAG", "Embeddings", "Vector Search", "pgvector"]
+            ].map((s, i) => <Reveal key={s[0]}><div className="tech-panel p-6"><div className="eyebrow"><span>0{i + 1}</span> / {s[0]}</div><div className="mt-7 space-y-3">{s.slice(1).map(x => <div key={x} className="skill-row"><span>{x}</span><span className="mono text-xs text-slate-500">●</span></div>)}</div></div></Reveal>)}</div>
+          </div>
+        </section>
+
+        <section id="work" className="section border-y border-white/5" aria-labelledby="work-title">
+          <div className="container-x"><Reveal><div className="eyebrow"><span>02</span> / SELECTED WORK</div><h2 id="work-title" className="section-title">ENGINEERING<br /><span className="muted-heading">IN PRACTICE.</span></h2></Reveal>
+            <div className="mt-14 grid gap-5 lg:grid-cols-2">{site.projects.map((project, i) => <Reveal key={project.name}><article className="tech-panel project-card">
+              <div className="project-head"><div><div className="eyebrow"><span>0{i + 1}</span> / PERSONAL PROJECT</div><h3>{project.name}</h3><p className="project-meta">{project.role} · {project.period}</p></div><span className={"status-pill " + project.status.toLowerCase().replaceAll(" ", "-")}>{project.status}</span></div>
+              <p className="project-problem">{project.problem}</p>
+              <div className="project-columns"><div><h4>WHAT I BUILT</h4><ul>{project.built.map(x => <li key={x}>{x}</li>)}</ul></div><div><h4>KEY DECISIONS</h4><ul>{project.decisions.map(x => <li key={x}>{x}</li>)}</ul></div></div>
+              <div className="tag-row">{project.stack.map(tag => <span key={tag}>{tag}</span>)}</div>
+              <Flow project={project} />
+              {(project.github || project.live) && <div className="project-links">{project.github && <a href={project.github} target="_blank" rel="noreferrer">GITHUB ↗</a>}{project.live && <a href={project.live} target="_blank" rel="noreferrer">LIVE DEMO ↗</a>}</div>}
+            </article></Reveal>)}</div>
+          </div>
+        </section>
+
+        <section id="experience" className="section" aria-labelledby="experience-title">
+          <div className="container-x"><Reveal><div className="eyebrow"><span>03</span> / PROFESSIONAL EXPERIENCE</div><div className="experience-grid"><div><div className="mono text-xs text-cyan-200">AUG 2024 — PRESENT</div><h2 id="experience-title">Tata Consultancy Services</h2><p>Software Engineer — Java Backend</p><span>Hyderabad · Enterprise HRMS & Finance Microservices</span></div><div className="experience-groups">{[
+            ["BACKEND", "Spring Boot 3 microservices on Java 21; REST APIs and Spring Data JPA across PostgreSQL / SQL Server."],
+            ["SECURITY", "Spring Security with JWT authentication and role-based access control across employee, HR and administrative endpoints."],
+            ["MESSAGING & CACHING", "Apache Kafka for asynchronous event processing and Redis caching for high-frequency payroll and attendance lookups."],
+            ["AI INTEGRATION", "Spring AI integration for document- and policy-based Q&A using retrieval and embeddings, with application-level access controls applied to retrieved context."],
+            ["OPERATIONS", "Production debugging, API and database issue resolution, and ongoing enhancements across backend services in Agile delivery."]
+          ].map(([label, text]) => <div className="experience-row" key={label}><strong>{label}</strong><p>{text}</p></div>)}</div></div></Reveal></div>
+        </section>
+
+        <section id="ai-lab" className="section border-y border-white/5" aria-labelledby="ai-title">
+          <div className="container-x"><Reveal><div className="eyebrow"><span>04</span> / AI APPLICATION LAB</div><h2 id="ai-title" className="section-title">PRACTICAL AI.<br /><span className="muted-heading">BACKEND CONTROL.</span></h2><p className="section-copy">RAG and LLM capabilities are application components—not an authorization layer. The backend controls identity, access scope and retrieval before context reaches the model.</p></Reveal>
+            <div className="mt-12 grid gap-5 lg:grid-cols-[1.4fr_.6fr]"><RagLab /><div className="tech-panel p-6"><div className="eyebrow"><span>SEC</span> / RAG</div><div className="security-flow">{["USER","JWT","SPRING SECURITY","RBAC","AUTHORIZED DATA SCOPE","VECTOR RETRIEVAL","CONTEXT","LLM","RESPONSE"].map((x, i) => <div key={x}><span className="node-dot" /><span>{x}</span>{i < 8 && <i />}</div>)}</div><div className="note">THE MODEL DOES NOT DECIDE AUTHORIZATION.<br />APPLICATION LOGIC CONTROLS RETRIEVED CONTEXT.</div></div></div>
+          </div>
+        </section>
+
+        <section id="stack" className="section" aria-labelledby="stack-title"><div className="container-x"><Reveal><div className="eyebrow"><span>05</span> / ENGINEERING CONSTELLATION</div><h2 id="stack-title" className="section-title">THE STACK<br /><span className="muted-heading">AROUND THE CORE.</span></h2></Reveal><div className="mt-10"><Constellation /></div></div></section>
+
+        <section id="playground" className="section border-y border-white/5" aria-labelledby="playground-title"><div className="container-x"><Reveal><div className="eyebrow"><span>06</span> / ARCHITECTURE PLAYGROUND</div><h2 id="playground-title" className="section-title">THINK IN<br /><span className="muted-heading">SYSTEMS.</span></h2><p className="section-copy">A conceptual playground for backend, distributed and AI application architecture.</p></Reveal><div className="mt-10"><Architecture /></div></div></section>
+
+        <section id="timeline" className="section" aria-labelledby="timeline-title"><div className="container-x"><Reveal><div className="eyebrow"><span>07</span> / TIMELINE</div><h2 id="timeline-title" className="sr-only">Career and project timeline</h2><div className="timeline"><div><span>2024</span><h3>TCS / Java Backend</h3><p>Enterprise HRMS & Finance Microservices</p></div><div><span>2025</span><h3>Digital Library</h3><p>Spring Boot backend platform</p></div><div><span>PRESENT</span><h3>PolicyDocs / AI Application Engineering</h3><p>Spring AI, RAG, embeddings, pgvector and controlled retrieval</p></div></div></Reveal></div></section>
+
+        <Contact />
+      </main>
+
+      <aside className="desktop-contact-rail" aria-label="Quick contact"><a href={`mailto:${site.email}`} aria-label="Email">✉</a><a href={site.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a><a href={`tel:${site.phone.replaceAll(" ", "")}`} aria-label="Phone">☎</a></aside>
+
+      <footer><div className="container-x footer-inner"><a href={`mailto:${site.email}`}>{site.email}</a><a href={site.linkedin} target="_blank" rel="noreferrer">LinkedIn</a><a href="#top">BACK TO TOP ↑</a><span>© {new Date().getFullYear()} {site.name}</span></div></footer>
+    </>
+  );
+}
