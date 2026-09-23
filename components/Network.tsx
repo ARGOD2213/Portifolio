@@ -1,6 +1,20 @@
-'use client'
-import {motion,useReducedMotion} from 'framer-motion'
-import {useState} from 'react'
-const nodes=[{id:'client',x:18,y:50,label:'CLIENT',sub:'WEB / MOBILE',c:'#48e4e8'},{id:'api',x:35,y:50,label:'API',sub:'REST / JWT',c:'#4aa8ff'},{id:'spring',x:52,y:50,label:'SPRING BOOT',sub:'JAVA 21',c:'#9a6cff'},{id:'db',x:76,y:22,label:'POSTGRESQL',sub:'JPA / HIBERNATE',c:'#4aa8ff'},{id:'redis',x:76,y:40,label:'REDIS',sub:'CACHE',c:'#ef6dff'},{id:'kafka',x:76,y:58,label:'KAFKA',sub:'EVENTS',c:'#f4c76b'},{id:'ai',x:76,y:76,label:'AI',sub:'SPRING AI / RAG',c:'#54e3a0'}]
-const edges=[['client','api'],['api','spring'],['spring','db'],['spring','redis'],['spring','kafka'],['spring','ai']]
-export default function Network(){const[active,setActive]=useState('spring');const reduce=useReducedMotion();const find=(id:string)=>nodes.find(n=>n.id===id)!;return <div className="tech-panel float" style={{minHeight:540}}><div className="absolute inset-0 grid-bg opacity-60"/><div className="absolute left-5 top-5 mono text-[9px] tracking-[.22em] text-slate-500">ARCH / 001 — BACKEND TOPOLOGY</div><div className="absolute right-5 top-5 mono text-[9px] text-emerald-300">● SYSTEM ONLINE</div><svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full p-8" preserveAspectRatio="none">{edges.map(([a,b],i)=>{const A=find(a),B=find(b);return <g key={i}><line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke="rgba(145,170,205,.22)" strokeWidth=".16" vectorEffect="non-scaling-stroke"/><motion.circle r=".55" fill={B.c} initial={{cx:A.x,cy:A.y}} animate={reduce?{cx:B.x,cy:B.y}:{cx:[A.x,B.x],cy:[A.y,B.y]}} transition={{duration:2.8,repeat:Infinity,delay:i*.35,ease:'linear'}}/></g>})}{nodes.map(n=><g key={n.id} onMouseEnter={()=>setActive(n.id)} onClick={()=>setActive(n.id)} style={{cursor:'pointer'}}><circle cx={n.x} cy={n.y} r={active===n.id?4.8:3.8} fill="#07101a" stroke={n.c} strokeWidth=".35"/><circle cx={n.x} cy={n.y} r="1.1" fill={n.c}/>{active===n.id&&<circle cx={n.x} cy={n.y} r="6" fill="none" stroke={n.c} strokeOpacity=".3" strokeWidth=".2"/>}</g>)}</svg>{nodes.map(n=><div key={n.id} className="absolute -translate-x-1/2 -translate-y-1/2" style={{left:`${n.x}%`,top:`${n.y}%`}}><div className="mt-7 text-center pointer-events-none"><div className="mono text-[9px] font-semibold tracking-[.16em]" style={{color:n.c}}>{n.label}</div><div className="mono text-[7px] tracking-[.1em] text-slate-600">{n.sub}</div></div></div>)}<div className="absolute bottom-5 left-5 right-5 flex items-end justify-between"><div><div className="mono text-[8px] text-slate-600">ACTIVE NODE</div><div className="mt-1 text-lg font-semibold" style={{color:find(active).c}}>{find(active).label}</div></div><div className="mono text-right text-[8px] leading-5 text-slate-500">LATENCY / CONTROLLED<br/>AUTH / APPLICATION LAYER</div></div></div>}
+"use client";
+import { useState } from "react";
+const nodes=[["client",12,50,"Client"],["api",30,50,"API"],["spring",50,50,"Spring Boot"],["db",78,25,"PostgreSQL"],["redis",78,43,"Redis"],["kafka",78,61,"Kafka"],["ai",78,79,"Spring AI"]];
+const edges=[["client","api"],["api","spring"],["spring","db"],["spring","redis"],["spring","kafka"],["spring","ai"]];
+export default function Network(){
+ const [active,setActive]=useState("spring");
+ const find=(id:string)=>nodes.find(n=>n[0]===id)!;
+ return <div className="request-sheet">
+   <div className="sheet-label">REQUEST TRACE</div>
+   <div className="trace-meta">GET /api/payroll/employee/{'{id}'} <span>200 OK</span></div>
+   <svg viewBox="0 0 100 100" aria-hidden="true" className="request-lines">
+    {edges.map(([a,b])=>{const A=find(a),B=find(b);return <path key={a+b} d={`M ${A[1]} ${A[2]} L ${B[1]} ${B[2]}`} />})}
+    {nodes.map(n=><circle key={n[0]} cx={n[1]} cy={n[2]} r={active===n[0]?2.6:1.8} className={active===n[0]?"active-node":""}/>)}
+   </svg>
+   {nodes.map(n=><button key={n[0]} className={`trace-node ${active===n[0]?"selected":""}`} style={{left:`${n[1]}%`,top:`${n[2]}%`}} onClick={()=>setActive(String(n[0]))}>
+     <span>{n[3]}</span>
+   </button>)}
+   <div className="trace-footer"><strong>{String(find(active)[3])}</strong><span>Application-controlled request path</span></div>
+ </div>;
+}
