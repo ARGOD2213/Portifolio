@@ -40,3 +40,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px}.footer-inner{displa
 @media(max-width:900px){.desktop-nav,.availability{display:none}.menu-button{display:block}.hero-grid{grid-template-columns:1fr}.hero{padding-top:120px}.hero-grid>div:last-child{min-height:390px}.experience-grid{grid-template-columns:1fr;gap:35px}}
 @media(max-width:767px){.container-x{width:min(100% - 24px,1400px)}.section{padding:82px 0}.nav-shell{margin:0 8px}.nav-contact{display:none}.hero{padding-top:110px}.display{font-size:clamp(44px,14vw,76px)}.hero-subtitle{font-size:17px}.hero-actions .primary-button,.hero-actions .secondary-button{width:100%}.proof-grid{grid-template-columns:1fr}.proof-grid div,.proof-grid div+div{padding:14px 0;border-right:0;border-bottom:1px solid var(--line)}.proof-grid div:last-child{border-bottom:0}.project-card{padding:20px;min-height:0}.project-head{flex-direction:column}.project-columns{grid-template-columns:1fr;gap:18px}.flow{margin-left:-4px;margin-right:-4px}.experience-row{grid-template-columns:1fr;gap:7px}.section-title{font-size:clamp(40px,12vw,60px)}.desktop-contact-rail{display:none}.footer-inner{flex-direction:column;align-items:flex-start;padding-bottom:58px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* Minimum readable label size across legacy visualization components. */
+.text-\[8px\],.text-\[9px\],.text-\[10px\],.text-\[11px\]{font-size:12px!important}
