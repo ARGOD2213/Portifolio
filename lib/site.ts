@@ -7,7 +7,7 @@ export const site = {
   linkedin: "https://in.linkedin.com/in/chintala-mahindra-178306241",
   github: "",
   location: "Hyderabad, India",
-  availability: "Open to Java backend roles · AI-enabled backend projects · freelance",
+  availability: "Open to Java backend roles, AI-enabled backend projects and freelance work",
   responseTime: "Within 24 hours",
   resume: "/Chintala_Mahindra_Resume.pdf",
   photo: "",
