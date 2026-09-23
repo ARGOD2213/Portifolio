@@ -1,125 +1,20 @@
 "use client";
-
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import { site } from "@/lib/site";
 
-type Intent = "Hiring / Job" | "Freelance project" | "Just saying hi";
-
-export default function Contact() {
-  const [intent, setIntent] = useState<Intent>("Hiring / Job");
-  const [status, setStatus] = useState("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [copied, setCopied] = useState("");
-  const contactRef = useRef<HTMLElement>(null);
-  const [formVisible, setFormVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setFormVisible(entry.isIntersecting), { threshold: 0.12 });
-    if (contactRef.current) observer.observe(contactRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
-    const name = String(data.get("name") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
-    const website = String(data.get("website") ?? "").trim();
-    const nextErrors: Record<string, string> = {};
-    if (!name) nextErrors.name = "Name is required.";
-    if (!/^\S+@\S+\.\S+$/.test(email)) nextErrors.email = "Enter a valid email.";
-    if (message.length < 20) nextErrors.message = "Please use at least 20 characters.";
-    if (website) return;
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) return;
-    setStatus("Sending…");
-    try {
-      const response = await fetch(`https://formspree.io/f/${site.formspreeId}`, { method: "POST", body: data, headers: { Accept: "application/json" } });
-      if (!response.ok) throw new Error("Request failed");
-      form.reset();
-      setStatus("Message sent. I’ll get back to you within 24 hours.");
-    } catch {
-      setStatus("Something went wrong. Please email me directly.");
-    }
-  }
-
-  async function copy(value: string, label: string) {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(label);
-      window.setTimeout(() => setCopied(""), 1500);
-    } catch {}
-  }
-
-  const cards = [
-    { label: "Email", value: site.email, href: `mailto:${site.email}?subject=Opportunity%20for%20Chintala%20Mahindra`, external: false },
-    { label: "Phone", value: site.phone, href: `tel:${site.phone.replaceAll(" ", "")}`, external: false },
-    { label: "LinkedIn", value: site.linkedin.replace("https://", ""), href: site.linkedin, external: true },
-    { label: "Location", value: site.location, href: "#contact", external: false }
-  ];
-
-  return (
-    <section ref={contactRef} id="contact" aria-labelledby="contact-title" className="section overflow-hidden border-t border-white/5">
-      <div className="container-x">
-        <div className="eyebrow"><span>08</span> / CONTACT</div>
-        <div className="mt-5 grid gap-12 lg:grid-cols-[.85fr_1.15fr]">
-          <div>
-            <h2 id="contact-title" className="section-title">LET&apos;S BUILD<br /><span className="muted-heading">SOMETHING USEFUL.</span></h2>
-            <p className="section-copy mt-7">{site.availability}</p>
-            <div className="mt-8 border border-white/10 bg-white/[.02] p-5">
-              <div className="mono text-xs tracking-[.12em] text-cyan-200">RESPONSE TIME</div>
-              <div className="mt-2 text-lg">{site.responseTime}</div>
-            </div>
-            <div className="mt-4 space-y-3">
-              {cards.map((card) => (
-                <div key={card.label} className="contact-card">
-                  <a href={card.href} target={card.external ? "_blank" : undefined} rel={card.external ? "noreferrer" : undefined} aria-label={card.label + ": " + card.value}>
-                    <span className="mono text-xs text-cyan-200">{card.label}</span>
-                    <span className="contact-value">{card.value}</span>
-                  </a>
-                  {card.label !== "Location" && <button type="button" className="copy-button" onClick={() => copy(card.value, card.label)} aria-label={"Copy " + card.label}>⧉</button>}
-                  {copied === card.label && <span className="copy-state">Copied ✓</span>}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="tech-panel p-6 md:p-8">
-            {site.formspreeId ? (
-              <form onSubmit={submit} noValidate>
-                <div className="mono text-xs tracking-[.16em] text-cyan-200">SEND A MESSAGE</div>
-                <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Message intent">
-                  {(["Hiring / Job", "Freelance project", "Just saying hi"] as Intent[]).map((item) => (
-                    <button key={item} type="button" className={`intent-chip ${intent === item ? "active" : ""}`} onClick={() => setIntent(item)}>{item}</button>
-                  ))}
-                </div>
-                <input type="hidden" name="subject" value={intent + " — Chintala Mahindra"} />
-                <label className="form-label" htmlFor="name">Name</label>
-                <input className="form-input" id="name" name="name" autoComplete="name" aria-invalid={Boolean(errors.name)} />
-                {errors.name && <span className="form-error">{errors.name}</span>}
-                <label className="form-label" htmlFor="email">Email</label>
-                <input className="form-input" id="email" name="email" type="email" autoComplete="email" aria-invalid={Boolean(errors.email)} />
-                {errors.email && <span className="form-error">{errors.email}</span>}
-                <label className="form-label" htmlFor="message">Message</label>
-                <textarea className="form-input min-h-40 resize-y" id="message" name="message" minLength={20} aria-invalid={Boolean(errors.message)} />
-                {errors.message && <span className="form-error">{errors.message}</span>}
-                <div className="honeypot" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex={-1} autoComplete="off" /></div>
-                <button className="primary-button mt-6 w-full" type="submit" disabled={status === "Sending…"}>{status === "Sending…" ? "SENDING…" : "SEND MESSAGE →"}</button>
-                <p className="status-line" aria-live="polite">{status}</p>
-              </form>
-            ) : (
-              <div>
-                <div className="mono text-xs tracking-[.16em] text-cyan-200">PREFER EMAIL?</div>
-                <p className="mt-4 text-lg text-slate-300">It&apos;s the fastest.</p>
-                <a className="primary-button mt-6 inline-flex" href={`mailto:${site.email}`}>EMAIL ME →</a>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      {!formVisible && <div className="mobile-contact-bar md:hidden"><a href={`tel:${site.phone.replaceAll(" ", "")}`}>CALL</a><a href={`mailto:${site.email}`}>EMAIL</a><a href={site.linkedin} target="_blank" rel="noreferrer">LINKEDIN</a></div>}
-    </section>
-  );
+export default function Contact(){
+ const [intent,setIntent]=useState("Hiring / Job"),[status,setStatus]=useState(""),[errors,setErrors]=useState<Record<string,string>>({}),[copied,setCopied]=useState("");
+ async function copy(value:string,label:string){try{await navigator.clipboard.writeText(value);setCopied(label);setTimeout(()=>setCopied(""),1500)}catch{}}
+ async function submit(e:FormEvent<HTMLFormElement>){
+  e.preventDefault();const form=e.currentTarget,data=new FormData(form),name=String(data.get("name")||"").trim(),email=String(data.get("email")||"").trim(),message=String(data.get("message")||"").trim(),website=String(data.get("website")||"");
+  if(website)return;const next:Record<string,string>={};if(!name)next.name="Enter your name.";if(!/^\S+@\S+\.\S+$/.test(email))next.email="Enter a valid email address.";if(message.length<20)next.message="Please use at least 20 characters.";setErrors(next);if(Object.keys(next).length)return;
+  setStatus("Sending message…");try{const r=await fetch(`https://formspree.io/f/${site.formspreeId}`,{method:"POST",body:data,headers:{Accept:"application/json"}});if(!r.ok)throw new Error();form.reset();setStatus("Message sent. I’ll reply within 24 hours.")}catch{setStatus("Message could not be sent. Please email me directly.")}
+ }
+ const cards=[["Email",site.email,`mailto:${site.email}?subject=Opportunity%20for%20Chintala%20Mahindra`],["Phone",site.phone,`tel:${site.phone.replaceAll(" ","")}`],["LinkedIn",site.linkedin.replace("https://",""),site.linkedin],["Location",site.location,"#contact"]];
+ return <section id="contact" className="contact-section" aria-labelledby="contact-title">
+  <div className="contact-grid"><div><p className="eyebrow">Contact</p><h2 id="contact-title">Have a Java backend problem to solve?</h2><p className="contact-copy">Open to Java backend roles, AI-enabled backend projects and selected freelance work.</p>
+   <div className="contact-cards">{cards.map(([label,value,href])=><div className="contact-card" key={label}><a href={href} target={label==="LinkedIn"?"_blank":undefined} rel={label==="LinkedIn"?"noreferrer":undefined}><strong>{label}</strong><span>{value}</span></a>{label!=="Location"&&<><button type="button" onClick={()=>copy(value,label)} aria-label={"Copy "+label}>Copy</button>{copied===label&&<em>Copied ✓</em>}</>}</div>)}</div>
+  </div><div className="contact-form-wrap">{site.formspreeId?<form onSubmit={submit} noValidate><p className="form-kicker">Message intent</p><div className="intent-row">{["Hiring / Job","Freelance project","Just saying hi"].map(x=><button type="button" key={x} className={intent===x?"active":""} onClick={()=>setIntent(x)}>{x}</button>)}</div><input type="hidden" name="subject" value={intent+" — Chintala Mahindra"}/><label htmlFor="name">Name</label><input id="name" name="name" autoComplete="name" aria-invalid={!!errors.name}/>{errors.name&&<small>{errors.name}</small>}<label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" aria-invalid={!!errors.email}/>{errors.email&&<small>{errors.email}</small>}<label htmlFor="message">Message</label><textarea id="message" name="message" minLength={20} aria-invalid={!!errors.message}/>{errors.message&&<small>{errors.message}</small>}<div className="honeypot" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex={-1}/></div><button className="send-button" type="submit">{status.startsWith("Sending")?"Sending message…":"Send message"}</button><p className="form-status" aria-live="polite">{status}</p></form>:<div><p className="form-kicker">Prefer email?</p><p className="contact-copy">It’s the fastest.</p><a className="send-button" href={`mailto:${site.email}`}>Email Mahindra</a></div>}</div></div>
+  <div className="mobile-contact-bar"><a href={`tel:${site.phone.replaceAll(" ","")}`}>Call</a><a href={`mailto:${site.email}`}>Email</a><a href={site.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></div>
+ </section>
 }
