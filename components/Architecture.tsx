@@ -1,5 +1,11 @@
-'use client'
-import{motion}from'framer-motion'
-import{useState}from'react'
-const modes={Backend:['CLIENT','CONTROLLER','SERVICE','REPOSITORY','DATABASE'],Distributed:['SERVICE A','KAFKA','SERVICE B','REDIS','DATABASE'],AI:['USER','SECURITY','RETRIEVAL','PGVECTOR','CONTEXT','LLM']}
-export default function Architecture(){const[mode,setMode]=useState<keyof typeof modes>('Backend');return <div className="tech-panel p-6 md:p-8"><div className="flex flex-wrap gap-2 border-b border-white/10 pb-5">{Object.keys(modes).map(m=><button key={m} onClick={()=>setMode(m as keyof typeof modes)} className={`mono px-3 py-2 text-[9px] tracking-[.18em] transition ${mode===m?'bg-white/10 text-white':'text-slate-500 hover:text-slate-300'}`}>{m.toUpperCase()}</button>)}</div><div className="relative mt-8 overflow-x-auto pb-4"><div className="flex min-w-[680px] items-center justify-center gap-3">{modes[mode].map((n,i)=><div key={n} className="flex items-center gap-3"><motion.div layout className="min-w-[105px] border border-white/10 bg-[#09111c] px-3 py-5 text-center" whileHover={{y:-5,borderColor:'rgba(72,228,232,.45)'}}><div className="mono text-[9px] font-semibold tracking-[.16em] text-slate-200">{n}</div><div className="mt-2 mono text-[7px] text-slate-600">NODE 0{i+1}</div></motion.div>{i<modes[mode].length-1&&<motion.div className="h-px w-10 bg-gradient-to-r from-cyan-300/40 to-violet-400/40" animate={{opacity:[.3,1,.3]}} transition={{duration:1.8,repeat:Infinity}}/>}</div>)}</div></div><div className="mt-5 mono text-[8px] tracking-[.14em] text-slate-600">CONCEPTUAL ARCHITECTURE — NOT A ONE-TO-ONE PRODUCTION TOPOLOGY</div></div>}
+"use client";
+import { useState } from "react";
+const modes={Backend:["Client","Controller","Service","Repository","Database"],Distributed:["Service A","Kafka","Service B","Redis","Database"],AI:["User","Security","Retrieval","pgvector","Context","LLM"]};
+export default function Architecture(){
+ const [mode,setMode]=useState<keyof typeof modes>("Backend");
+ return <div className="architecture-sheet">
+  <div className="mode-tabs">{Object.keys(modes).map(m=><button key={m} onClick={()=>setMode(m as keyof typeof modes)} className={mode===m?"active":""}>{m}</button>)}</div>
+  <div className="architecture-flow">{modes[mode].map((n,i)=><div className="architecture-step" key={n}><span>{n}</span>{i<modes[mode].length-1&&<i aria-hidden="true"/>}</div>)}</div>
+  <p className="drawing-note">Conceptual architecture — not a one-to-one production topology.</p>
+ </div>;
+}
