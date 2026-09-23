@@ -11,7 +11,7 @@ export const site = {
   responseTime: "Within 24 hours",
   resume: "/Chintala_Mahindra_Resume.pdf",
   photo: "",
-  formspreeId: "mzezgyzb",
+  formspreeId: process.env.NEXT_PUBLIC_FORMSPREE_ID ?? "",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "",
   projects: [
     {
@@ -21,16 +21,8 @@ export const site = {
       role: "Personal project",
       problem: "A secure digital library backend for role-aware workflows, book-file storage, caching and cloud delivery.",
       stack: ["Spring Boot 3", "Java 21", "PostgreSQL", "Redis", "Docker", "AWS"],
-      built: [
-        "REST APIs, Spring Data JPA, Flyway migrations and role-based workflows for readers, vendors and admins.",
-        "JWT authentication, Redis caching and S3 storage for book files with SES/SNS notifications.",
-        "Docker Compose containerization and AWS EC2 deployment using GitHub Actions CI/CD."
-      ],
-      decisions: [
-        "Used JPA and Flyway to keep persistence and schema changes explicit.",
-        "Used Redis for caching and S3 for book-file storage rather than placing files in the relational database.",
-        "Used JWT/RBAC to separate reader, vendor and admin access."
-      ],
+      built: ["REST APIs, Spring Data JPA, Flyway migrations and role-based workflows for readers, vendors and admins.","JWT authentication, Redis caching and S3 storage for book files with SES/SNS notifications.","Docker Compose containerization and AWS EC2 deployment using GitHub Actions CI/CD."],
+      decisions: ["Used JPA and Flyway to keep persistence and schema changes explicit.","Used Redis for caching and S3 for book-file storage rather than placing files in the relational database.","Used JWT/RBAC to separate reader, vendor and admin access."],
       github: "",
       live: ""
     },
@@ -41,36 +33,8 @@ export const site = {
       role: "Personal project",
       problem: "A controlled document Q&A service that retrieves relevant policy context before generating an answer.",
       stack: ["Spring Boot 3", "Spring AI", "Java 21", "PostgreSQL + pgvector", "Redis", "Docker", "AWS"],
-      built: [
-        "Document ingestion, chunking, embeddings and RAG-based Q&A over policy documents.",
-        "pgvector semantic retrieval, conversation context and structured outputs.",
-        "JWT/RBAC-protected retrieval with Docker and AWS EC2 deployment."
-      ],
-      decisions: [
-        "Used pgvector to keep semantic retrieval close to the application database.",
-        "Applied application-level access controls before retrieved context reaches the model.",
-        "Focused on grounded responses and controlled backend access rather than open LLM access."
-      ],
-      github: "",
-      live: ""
-    },
-    {
-      name: "Enterprise AI Engineering Control Plane",
-      status: "Building",
-      period: "Personal build",
-      role: "Architecture concept / upcoming build",
-      problem: "A production-oriented pattern for introducing AI capabilities into existing enterprise backend systems without making the LLM the authorization layer.",
-      stack: ["Java 21", "Spring Boot", "Spring AI", "PostgreSQL + pgvector", "Redis", "Kafka", "JWT / RBAC", "AWS"],
-      built: [
-        "Planned AI orchestration boundary between secure backend services, retrieval and model interaction.",
-        "Planned authorization-aware retrieval flow so application rules determine the data scope before model context is assembled.",
-        "Planned structured AI responses, audit-friendly processing and asynchronous event integration."
-      ],
-      decisions: [
-        "Backend security remains authoritative; the model does not decide authorization.",
-        "Retrieval is treated as an application capability with explicit data scope.",
-        "The project is intentionally marked Building and does not represent production experience."
-      ],
+      built: ["Document ingestion, chunking, embeddings and RAG-based Q&A over policy documents.","pgvector semantic retrieval, conversation context and structured outputs.","JWT/RBAC-protected retrieval with Docker and AWS EC2 deployment."],
+      decisions: ["Used pgvector to keep semantic retrieval close to the application database.","Applied application-level access controls before retrieved context reaches the model.","Focused on grounded responses and controlled backend access rather than open LLM access."],
       github: "",
       live: ""
     }
